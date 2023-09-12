@@ -36,3 +36,37 @@ app = Flask(__name)
 #################################################
 # Flask Routes
 #################################################
+@app.route("/")
+def welcome():
+    """List api routes"""
+    return (
+        f"Available Routes:<br/>"
+        f"//api/v1.0/precipitation<br/>"
+        f"/api/v1.0/stations<br/>"
+        f"/api/v1.0/tobs</br"
+        f"/api/v1.0/<start>"
+        f"/api/v1.0/<start>/<end>"
+    )
+
+@app.route("//api/v1.0/precipitation")
+def precipitation():
+    session = Session(engine)
+
+    #query
+    results = session.query()
+    
+    session.close()
+
+    #dicitonary
+    all_prcp = []
+    for prcp in results:
+        prcp_dict = {}
+        prcp_dict["Precipitation"] = prcp
+        all_prcp.append(prcp_dict)
+
+    return jsonify(all_prcp)
+
+
+
+if __name__ == "__main__":
+    app.run(debu=True)
